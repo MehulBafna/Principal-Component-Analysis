@@ -20,17 +20,14 @@ def VCM(x,y,m,n):
         for j in i:
             z+=j
         M.append(z)
+        
     N = np.array(M)
+    
     P = N.reshape((n,n))/(n-1) # Variance-Covariance marix
     Q,R = np.linalg.eigh(P) #Q stores eigenvalues while R store rspective eigenvectors
+    
     S = np.zeros((len(R),len(R)))
     for i in range(0,len(R)):
         S[:,i]=R[:,len(R)-i-1]
         
-        
-    
-    
-    return P,S
-
-
-    
+    return P,S    
