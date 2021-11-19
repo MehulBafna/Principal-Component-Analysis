@@ -1,6 +1,6 @@
 '''Program for computing variance-covariance matrix and Principal Component Analysis(PCA) '''
 import numpy as np
-from sklearn.decomposition import PCA
+
 def VCM(x,y,m,n):
     A = np.random.randint(x,y,(m,n)) #Creates a random m-by-n dimensional array where each value of array is in range [x,y]
     print(A)
