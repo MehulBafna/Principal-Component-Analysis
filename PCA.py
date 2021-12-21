@@ -1,33 +1,49 @@
-'''Program for computing variance-covariance matrix and Principal Component Analysis(PCA) '''
 import numpy as np
 
-def VCM(x,y,m,n):
-    A = np.random.randint(x,y,(m,n)) #Creates a random m-by-n dimensional array where each value of array is in range [x,y]
-    print(A)
-    B = np.zeros((m,n))
-    for i in range(n):
-        B[:,i]=A[:,i]-np.average(A[:,i]) 
+class Principal_comp_anal:
     
-    
-    L = []
-    for i in range(0,n):
-        for j in range(0,n):
-            L.append(B[:,i]*B[:,j])
-    
-    M=[]
-    for i in L:
-        z = 0
-        for j in i:
-            z+=j
-        M.append(z)
+    def Var_Covar_matrix(self,matrix):
+        self.matrix = matrix
+        B = np.zeros((len(self.matrix),len(self.matrix.T)))
+        for i in range(len(self.matrix.T)):
+            B[:,i]=self.matrix[:,i]-np.average(self.matrix[:,i]) 
         
-    N = np.array(M)
-    
-    P = N.reshape((n,n))/(n-1) # Variance-Covariance marix
-    Q,R = np.linalg.eigh(P) #Q stores eigenvalues while R store rspective eigenvectors
-    
-    S = np.zeros((len(R),len(R)))
-    for i in range(0,len(R)):
-        S[:,i]=R[:,len(R)-i-1]
+        M = []
+        for i in range(0,len(self.matrix.T)):
+            for j in range(0,len(self.matrix.T)):
+                M.append(B[:,i]*B[:,j])
         
-    return P,S    
+        N=[]
+        for i in M:
+            z = 0
+            for j in i:
+                z+=j
+            N.append(z)
+            
+        C = np.array(N)
+        
+        P = C.reshape((len(self.matrix.T),len(self.matrix.T)))/(len(self.matrix.T)-1) # Variance-Covariance marix
+        return P
+    
+    def Prin_anal(self,matrix):
+        self.matrix = matrix 
+        x = Principal_comp_anal.Var_Covar_matrix(self,matrix)
+        Q,R = np.linalg.eigh(x) #Q stores eigenvalues while R store rspective eigenvectors
+            
+        S = np.zeros((len(R),len(R)))
+        for i in range(0,len(R)):
+            S[:,i]=R[:,len(R)-i-1]
+                
+        return S
+    
+if __name__=='__main__':
+    x = int(input())
+    y = int(input())
+    L = np.zeros((x,y))
+    for i in range(x):
+        for j in range(y):
+            L[i][j] = float(input())     
+    obj = Principal_comp_anal()
+    print('\n',L)
+    print('\n', 'Variance-covariance matrix - ','\n',obj.Var_Covar_matrix(L))
+    print('\n',obj.Prin_anal(L))
