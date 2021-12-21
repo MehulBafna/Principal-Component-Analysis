@@ -28,7 +28,7 @@ class Principal_comp_anal:
     def Prin_anal(self,matrix):
         self.matrix = matrix 
         x = Principal_comp_anal.Var_Covar_matrix(self,matrix)
-        Q,R = np.linalg.eigh(x) #Q stores eigenvalues while R store rspective eigenvectors
+        Q,R = np.linalg.eigh(x) #Q stores eigenvalues while R store respective eigenvectors
             
         S = np.zeros((len(R),len(R)))
         for i in range(0,len(R)):
